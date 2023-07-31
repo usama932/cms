@@ -1,6 +1,6 @@
 <footer class="footer text-sm text-muted">
     <div>
-        <a href="/" class="text-muted">{{app_name()}}</a>.
+        <a href="/" class="text-muted">Webexert</a>.
         @if(setting('show_copyright'))
         @lang('Copyright') &copy; {{ date('Y') }}
         @endif
