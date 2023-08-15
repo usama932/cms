@@ -22,8 +22,8 @@ class UserRoleTableSeeder extends Seeder
 
         User::findOrFail(1)->assignRole('super admin');
         User::findOrFail(2)->assignRole('administrator');
-        User::findOrFail(3)->assignRole('manager');
-        User::findOrFail(4)->assignRole('executive');
+        User::findOrFail(3)->assignRole('country_head');
+        User::findOrFail(4)->assignRole('agency');
         User::findOrFail(5)->assignRole('user');
 
         Schema::enableForeignKeyConstraints();

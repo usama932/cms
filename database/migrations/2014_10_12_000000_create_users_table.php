@@ -20,6 +20,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('mobile')->nullable();
             $table->string('gender')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_iban')->nullable();
+            $table->string('bank_account_no')->nullable();
+            $table->string('bank_account_name')->nullable();
+            $table->string('role')->nullable();
+            $table->string('image')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
