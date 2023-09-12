@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\Frontend\UserRegistered;
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -21,12 +21,15 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        addJavascriptFile('assets/js/custom/authentication/sign-up/general.js');
+
+        return view('pages.auth.register');
     }
 
     /**
      * Handle an incoming registration request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -34,27 +37,20 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'first_name' => ['required', 'string', 'max:191'],
-            'last_name' => ['required', 'string', 'max:191'],
-            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'name' => $request->first_name.' '.$request->last_name,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'last_login_at' => \Illuminate\Support\Carbon::now()->toDateTimeString(),
+            'last_login_ip' => $request->getClientIp()
         ]);
 
-        // username
-        $username = config('app.initial_username') + $user->id;
-        $user->username = $username;
-        $user->save();
-
         event(new Registered($user));
-        event(new UserRegistered($user));
 
         Auth::login($user);
 

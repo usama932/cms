@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost-starter.local'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL'),
 
@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Dhaka',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -112,37 +112,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Available Locales
-    |--------------------------------------------------------------------------
-    |
-    | Available locales will be used any location in code , that need to show
-    | all available languages
-    |
-    */
-
-    'available_locales' => [
-        'ar' => 'العربی(AR)',
-        'bn' => 'বাংলা (BN)',
-        'en' => 'English (EN)',
-        'vi' => 'Vietnamese (VI)',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Initial Username
-    |--------------------------------------------------------------------------
-    |
-    | Usernames is an unique number, generated automatically,
-    | and assigned to the user.
-    | It is needed to have an initial number and will be increased as
-    | a new user registered.
-    |
-    */
-
-    'initial_username' => env('INITIAL_USERNAME', 100000),
-
-    /*
-    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |
@@ -156,7 +125,23 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'salt' => 'zXfMPtcERG7XVFF4yUsSaRgOg',
+    /*
+    |--------------------------------------------------------------------------
+    | Maintenance Mode Driver
+    |--------------------------------------------------------------------------
+    |
+    | These configuration options determine the driver used to determine and
+    | manage Laravel's "maintenance mode" status. The "cache" driver will
+    | allow maintenance mode to be controlled across multiple machines.
+    |
+    | Supported drivers: "file", "cache"
+    |
+    */
+
+    'maintenance' => [
+        'driver' => 'file',
+        // 'store'  => 'redis',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -204,6 +189,7 @@ return [
         /*
          * Application Service Providers...
          */
+        App\Providers\HelperServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -224,7 +210,6 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Menu' => Lavary\Menu\Facade::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

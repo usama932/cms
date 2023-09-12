@@ -15,16 +15,20 @@ class NewPasswordController extends Controller
     /**
      * Display the password reset view.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
     public function create(Request $request)
     {
-        return view('auth.reset-password', ['request' => $request]);
+        addJavascriptFile('assets/js/custom/authentication/reset-password/new-password.js');
+
+        return view('pages.auth.reset-password', ['request' => $request]);
     }
 
     /**
      * Handle an incoming new password request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -58,6 +62,6 @@ class NewPasswordController extends Controller
         return $status == Password::PASSWORD_RESET
                     ? redirect()->route('login')->with('status', __($status))
                     : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+                            ->withErrors(['email' => __($status)]);
     }
 }
